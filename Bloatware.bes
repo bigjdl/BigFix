@@ -7,7 +7,7 @@
 		<Relevance><![CDATA[(if(name of operating system starts with "Win") then free space of drive of client > 4658 else if ((mac of it) of operating system) then free space of filesystem of folder (pathname of client) > 4658 else free space of filesystem of client > 4658)]]></Relevance>
 		<Relevance>/* No special file types found. Default relevance used. */   true</Relevance>
 		<Relevance>name of operating system starts with "Win10"</Relevance>
-		<Category>Software Distribution</Category>
+		<Category>Software Configuration</Category>
 		<DownloadSize>2329</DownloadSize>
 		<Source>Jared Levy</Source>
 		<SourceID><![CDATA[<Unspecified>]]></SourceID>
