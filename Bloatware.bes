@@ -9,9 +9,9 @@
 		<Relevance>name of operating system starts with "Win10"</Relevance>
 		<Category>Software Distribution</Category>
 		<DownloadSize>2329</DownloadSize>
-		<Source>Brad Sexton</Source>
+		<Source>Jared Levy</Source>
 		<SourceID><![CDATA[<Unspecified>]]></SourceID>
-		<SourceReleaseDate>2019-03-07</SourceReleaseDate>
+		<SourceReleaseDate>2020-12-10</SourceReleaseDate>
 		<SourceSeverity><![CDATA[<Unspecified>]]></SourceSeverity>
 		<CVENames></CVENames>
 		<SANSID></SANSID>
@@ -81,11 +81,11 @@
 		</MIMEField>
 		<MIMEField>
 			<Name>bigfixme-added-time</Name>
-			<Value>Thu, 13 Feb 2020 13:07:14 GMT</Value>
+			<Value>Thu, 10 Dec 2020 13:07:14 GMT</Value>
 		</MIMEField>
 		<MIMEField>
 			<Name>bigfixme-modification-time</Name>
-			<Value>Thu, 13 Feb 2020 13:07:14 GMT</Value>
+			<Value>Thu, 10 Dec 2020 13:07:14 GMT</Value>
 		</MIMEField>
 		<MIMEField>
 			<Name>bigfixme-keywords</Name>
