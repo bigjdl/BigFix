@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
 	<Task>
-		<Title>Bloatware</Title>
+		<Title>Windows 10 - Bloatware</Title>
 		<Description></Description>
 		<Relevance><![CDATA[version of client >= "8.2"]]></Relevance>
 		<Relevance><![CDATA[(if(name of operating system starts with "Win") then free space of drive of client > 4658 else if ((mac of it) of operating system) then free space of filesystem of folder (pathname of client) > 4658 else free space of filesystem of client > 4658)]]></Relevance>
