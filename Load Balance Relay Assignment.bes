@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Task>
+		<Title>Load Balance Relay Assignment</Title>
+		<Description>Set relay selection to manual and then assign relays to an endpoint </Description>
+		<Relevance>not exists relay service</Relevance>
+		<Relevance>not exists main gather service</Relevance>
+		<Category></Category>
+		<Source>Internal</Source>
+		<SourceID></SourceID>
+		<SourceReleaseDate>2020-08-20</SourceReleaseDate>
+		<SourceSeverity></SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Wed, 06 Jan 2021 16:53:41 +0000</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> to deploy this action.</PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[// Enter your action script here
+
+
+setting "__RelayServer1"="{"http://" & (tuple string item (computer id mod 3) of (it as string) of ("relay1","relay2","relay3")) & ":52311/bfmirror/downloads/"}" on "{now}" for client
+setting "__RelayServer2"="{"http://" & (tuple string item ((computer id + 1) mod 3) of (it as string) of ("relay1","relay2","relay3")) & ":52311/bfmirror/downloads/"}" on "{now}" for client
+
+]]></ActionScript>
+		</DefaultAction>
+	</Task>
+</BES>
