@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<SingleAction>
+		<Title>Company Name for Keith</Title>
+		<Relevance>true</Relevance>
+		<ActionScript MIMEType="application/x-Fixlet-Windows-Shell">// Enter your action script here
+
+parameter "full name" = "{(if (exists value of settings "_BESClient_ActiveDirectoryPathOverride" of client) then (value of setting "_BESClient_ActiveDirectoryPathOverride" of client) else (distinguished name of local computer of active directory|computer name))as string as lowercase}"
+
+parameter "hostname" = "{((if (first 2 of it = "CN") then (substring after "=" of preceding text of first "," of it) else (computer name)) of (if (exists value of settings "_BESClient_ActiveDirectoryPathOverride" of client) then (value of setting "_BESClient_ActiveDirectoryPathOverride" of client) else (distinguished name of local computer of active directory|computer name))) as string as lowercase}"
+
+
+
+if {(parameter "full name") as string contains "asrc"}
+	if {(parameter "hostname") as string starts with "achc-"}
+		setting "company name" = "ASRC Construction Holding Company, LLC" on "{now}" for client
+	elseif {(parameter "hostname") as string starts with "aes-"} 
+		setting "company name" = "ASRC Energy Services, Inc." on "{now}" for client
+	elseif {(parameter "hostname") as string starts with "asrc-"}
+		setting "company name" = "Arctic Slope Regional Corporation" on "{now}" for client
+	elseif {(parameter "hostname") as string starts with "ascf-"}  
+		setting "company name" = "Arctic Slope Community Foundation" on "{now}" for client
+	elseif {(parameter "hostname") as string starts with "aef-"}
+		setting "company name" = "Arctic Education Foundation" on "{now}" for client
+	elseif {(parameter "hostname") as string starts with "agc-"}    
+		setting "company name" = "Alaska Growth Capital BIDCO, Inc." on "{now}" for client
+	elseif {(parameter "hostname") as string starts with "lrs-"}    
+		setting "company name" = "Little Red Services" on "{now}" for client
+	elseif {(parameter "hostname") as string starts with "api-"}    
+		setting "company name" = "Arctic Pipe Inspection" on "{now}" for client
+	elseif {(parameter "hostname") as string starts with "psi-"}    
+		setting "company name" = "Petro Star Inc." on "{now}" for client
+	elseif {(parameter "hostname") as string starts with "oni-"}    
+		setting "company name" = "Omega Natchiq, Inc." on "{now}" for client
+	elseif {(parameter "hostname") as string starts with "acanc-"}    
+		setting "company name" = "Server" on "{now}" for client
+	elseif {(parameter "hostname") as string starts with "psanc-"}    
+		setting "company name" = "Server" on "{now}" for client
+	elseif {(parameter "hostname") as string starts with "acfai-"}    
+		setting "company name" = "Server" on "{now}" for client
+	elseif {(parameter "hostname") as string starts with "psfai-"}    
+		setting "company name" = "Server" on "{now}" for client
+	elseif {(parameter "hostname") as string starts with "esfai-"}    
+		setting "company name" = "Server" on "{now}" for client							
+	elseif {(parameter "hostname") as string starts with "psdut-"}    
+		setting "company name" = "Server" on "{now}" for client	
+	elseif {(parameter "hostname") as string starts with "psnpr-"}    
+		setting "company name" = "Server" on "{now}" for client	
+	elseif {(parameter "hostname") as string starts with "acbrw-"}    
+		setting "company name" = "Server" on "{now}" for client	
+	elseif {(parameter "hostname") as string starts with "acpb-"}    
+		setting "company name" = "Server" on "{now}" for client											
+	elseif {(parameter "hostname") as string starts with "psvdz-"}    
+		setting "company name" = "Server" on "{now}" for client									
+	elseif {(parameter "hostname") as string starts with "acvdz-"}    
+		setting "company name" = "Server" on "{now}" for client															
+	elseif {(parameter "hostname") as string starts with "acais-"}    
+		setting "company name" = "Server" on "{now}" for client	
+	elseif {(parameter "hostname") as string starts with "ahanc-"}    
+		setting "company name" = "Server" on "{now}" for client																							
+	else 
+		setting "company name" = "Corp" on "{now}" for client																					
+	endif																							
+elseif {(parameter "full name") as string contains "pcicorp"}
+	if {(parameter "hostname") as string starts with "ais-"}
+		setting "company name" = "ASRC Industrial Services" on "{now}" for client
+	else
+		setting "company name" = "Petrochem" on "{now}" for client
+	endif
+elseif {((it contains "office")and (it contains "lan"))of ((parameter "full name") as string)}
+	setting "company name" = "ASRC Construction Holding Company, LLC.”" on "{now}" for client
+elseif {(parameter "full name") as string contains "k2industrial"}
+	setting "company name" = "K2 Industrial Services" on "{now}" for client
+elseif {(parameter "full name") as string contains "petrostar"}
+	setting "company name" = "Petro Star Inc." on "{now}" for client	
+elseif {(parameter "full name") as string contains "braddcole"}
+	setting "company name" = "Brad Cole Construction" on "{now}" for client
+elseif {(parameter "full name") as string contains "daca01"}
+	setting "company name" = "DACA Specialty Serivces" on "{now}" for client
+elseif {((it contains "domain")and (it contains "local"))of ((parameter "full name") as string)}
+	setting "company name" = "F.D. Thomas, Inc." on "{now}" for client
+elseif {(parameter "full name") as string contains "eqm"}
+	setting "company name" = "Environmental Quality Management" on "{now}" for client
+elseif {(parameter "full name") as string contains "hudspeth"}
+	setting "company name" = "Hudspeth" on "{now}" for client
+elseif {(parameter "full name") as string contains "nilesbros"}
+	setting "company name" = "Niles Construction Services, Inc." on "{now}" for client
+elseif {(parameter "full name") as string contains "nwdnet"}
+	setting "company name" = "Northwest Demolition and Dismantling" on "{now}" for client
+elseif {(parameter "full name") as string contains "rsi"}
+	setting "company name" = "RSI EnTech" on "{now}" for client
+elseif {((first 2 of it != "CN") of ((parameter "full name") as string)) and ((parameter "hostname") as string starts with "mavo")}
+	setting "company name" = "Mavo Systems" on "{now}" for client
+else
+	setting "company name" = "Unassigned" on "{now}" for client
+endif</ActionScript>
+		<SuccessCriteria Option="RunToCompletion"></SuccessCriteria>
+		<Settings>
+			<PreActionShowUI>false</PreActionShowUI>
+			<HasRunningMessage>false</HasRunningMessage>
+			<HasTimeRange>false</HasTimeRange>
+			<HasStartTime>false</HasStartTime>
+			<HasEndTime>true</HasEndTime>
+			<EndDateTimeLocalOffset>P2D</EndDateTimeLocalOffset>
+			<HasDayOfWeekConstraint>false</HasDayOfWeekConstraint>
+			<UseUTCTime>false</UseUTCTime>
+			<ActiveUserRequirement>NoRequirement</ActiveUserRequirement>
+			<ActiveUserType>AllUsers</ActiveUserType>
+			<HasWhose>false</HasWhose>
+			<PreActionCacheDownload>false</PreActionCacheDownload>
+			<Reapply>false</Reapply>
+			<HasReapplyLimit>true</HasReapplyLimit>
+			<ReapplyLimit>3</ReapplyLimit>
+			<HasReapplyInterval>false</HasReapplyInterval>
+			<HasRetry>false</HasRetry>
+			<HasTemporalDistribution>false</HasTemporalDistribution>
+			<ContinueOnErrors>true</ContinueOnErrors>
+			<PostActionBehavior Behavior="Nothing"></PostActionBehavior>
+			<IsOffer>false</IsOffer>
+		</Settings>
+		<SettingsLocks>
+			<ActionUITitle>false</ActionUITitle>
+			<PreActionShowUI>false</PreActionShowUI>
+			<PreAction>
+				<Text>false</Text>
+				<AskToSaveWork>false</AskToSaveWork>
+				<ShowActionButton>false</ShowActionButton>
+				<ShowCancelButton>false</ShowCancelButton>
+				<DeadlineBehavior>false</DeadlineBehavior>
+				<ShowConfirmation>false</ShowConfirmation>
+			</PreAction>
+			<HasRunningMessage>false</HasRunningMessage>
+			<RunningMessage>
+				<Text>false</Text>
+			</RunningMessage>
+			<TimeRange>false</TimeRange>
+			<StartDateTimeOffset>false</StartDateTimeOffset>
+			<EndDateTimeOffset>false</EndDateTimeOffset>
+			<DayOfWeekConstraint>false</DayOfWeekConstraint>
+			<ActiveUserRequirement>false</ActiveUserRequirement>
+			<ActiveUserType>false</ActiveUserType>
+			<Whose>false</Whose>
+			<PreActionCacheDownload>false</PreActionCacheDownload>
+			<Reapply>false</Reapply>
+			<ReapplyLimit>false</ReapplyLimit>
+			<RetryCount>false</RetryCount>
+			<RetryWait>false</RetryWait>
+			<TemporalDistribution>false</TemporalDistribution>
+			<ContinueOnErrors>false</ContinueOnErrors>
+			<PostActionBehavior>
+				<Behavior>false</Behavior>
+				<AllowCancel>false</AllowCancel>
+				<Deadline>false</Deadline>
+				<Title>false</Title>
+				<Text>false</Text>
+			</PostActionBehavior>
+			<IsOffer>false</IsOffer>
+			<AnnounceOffer>false</AnnounceOffer>
+			<OfferCategory>false</OfferCategory>
+			<OfferDescriptionHTML>false</OfferDescriptionHTML>
+		</SettingsLocks>
+		<IsUrgent>false</IsUrgent>
+	</SingleAction>
+</BES>
