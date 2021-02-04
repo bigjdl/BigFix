@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Task>
+		<Title>Set command pole to 10 minuts over evaluation time</Title>
+		<Description><![CDATA[<DIV class=FixletMessage>
+<TABLE>
+<TBODY>
+<TR>
+<TD>
+<P>BES Clients listen for UDP commands that have been sent to them by their parent Relay or Server. Sometimes UDP commands may not make it to a Client, as when UDP has been blocked by a firewall or there is a significant amount of network traffic.<BR><BR>This task configures Clients to poll their parent Relay or Server once an hour for UDP commands they may have missed (BigFix 6.0+).<BR><BR></P>
+<P>This fixlet dynamically assigns the command pole interval based on the evaluation loop.</P>
+<P>If the evaluation loop is less than 10 minutes, the command poll will be set to 20 minutes, the minimum suggested value.</P>
+<P>If the evaluation loop is greater than the command poll,&nbsp;the command poll will be set to the evaluation loop time + 10 minutes (600 seconds), assumeing evaluation loop time + 10 minutes is greater than 20 minutes, the minimum suggested value.&nbsp;<BR></P></TD></TR></TBODY></TABLE></DIV>]]></Description>
+		<Relevance><![CDATA[version of client >= "5.1"]]></Relevance>
+		<Relevance>(if exists property "in proxy agent context" then ( not in proxy agent context ) else true )</Relevance>
+		<Relevance><![CDATA[version of client >= "6.0"]]></Relevance>
+		<Relevance><![CDATA[((value of setting "_BESClient_Comm_CommandPollIntervalSeconds" of client as integer) <= ((average of evaluationcycle of client as integer / 1000) as integer)) or ((((value of setting "_BESClient_Comm_CommandPollIntervalSeconds" of client as integer) - (((average of evaluationcycle of client as integer / 1000) as integer))) > 600) and ((value of setting "_BESClient_Comm_CommandPollIntervalSeconds" of client as integer) > 1200))]]></Relevance>
+		<Category>BES Client Setting</Category>
+		<DownloadSize>0</DownloadSize>
+		<Source>jared.levy@hcl.com</Source>
+		<SourceID>Use this content at your own risk.  This is not content provide by HCL or the BigFix team.</SourceID>
+		<SourceSeverity></SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>x-fixlet-first-propagation</Name>
+			<Value>Wed, 19 Aug 2009 22:45:57 +0000</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-domain_attributes</Name>
+			<Value>BES Component Client</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Mon, 09 Nov 2020 15:11:46 +0000</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<DefaultAction ID="Action2">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink><![CDATA[&nbsp;to enable the task as a policy]]></PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[
+setting "_BESClient_Comm_CommandPollEnable"="1" on "{parameter "action issue date" of action}" for client
+
+
+if {((average of evaluationcycle of client as integer / 1000) + 600) > 1200}
+	setting "_BESClient_Comm_CommandPollIntervalSeconds"="{(average of evaluationcycle of client as integer / 1000) + 600}" on "{now}" for client 
+else 
+	setting "_BESClient_Comm_CommandPollIntervalSeconds"="1200" on "{now}" for client
+endif
+]]></ActionScript>
+			<Settings>
+				<PreActionShowUI>false</PreActionShowUI>
+				<HasRunningMessage>false</HasRunningMessage>
+				<HasTimeRange>false</HasTimeRange>
+				<HasStartTime>false</HasStartTime>
+				<HasEndTime>false</HasEndTime>
+				<HasDayOfWeekConstraint>false</HasDayOfWeekConstraint>
+				<UseUTCTime>false</UseUTCTime>
+				<ActiveUserRequirement>NoRequirement</ActiveUserRequirement>
+				<ActiveUserType>AllUsers</ActiveUserType>
+				<HasWhose>false</HasWhose>
+				<PreActionCacheDownload>false</PreActionCacheDownload>
+				<Reapply>true</Reapply>
+				<HasReapplyLimit>false</HasReapplyLimit>
+				<HasReapplyInterval>false</HasReapplyInterval>
+				<HasRetry>false</HasRetry>
+				<HasTemporalDistribution>false</HasTemporalDistribution>
+				<ContinueOnErrors>true</ContinueOnErrors>
+				<PostActionBehavior Behavior="Nothing"></PostActionBehavior>
+				<IsOffer>false</IsOffer>
+			</Settings>
+			<SettingsLocks>
+				<ActionUITitle>false</ActionUITitle>
+				<PreActionShowUI>false</PreActionShowUI>
+				<PreAction>
+					<Text>false</Text>
+					<AskToSaveWork>false</AskToSaveWork>
+					<ShowActionButton>false</ShowActionButton>
+					<ShowCancelButton>false</ShowCancelButton>
+					<DeadlineBehavior>false</DeadlineBehavior>
+					<ShowConfirmation>false</ShowConfirmation>
+				</PreAction>
+				<HasRunningMessage>false</HasRunningMessage>
+				<RunningMessage>
+					<Text>false</Text>
+				</RunningMessage>
+				<TimeRange>false</TimeRange>
+				<StartDateTimeOffset>false</StartDateTimeOffset>
+				<EndDateTimeOffset>true</EndDateTimeOffset>
+				<DayOfWeekConstraint>false</DayOfWeekConstraint>
+				<ActiveUserRequirement>false</ActiveUserRequirement>
+				<ActiveUserType>false</ActiveUserType>
+				<Whose>false</Whose>
+				<PreActionCacheDownload>false</PreActionCacheDownload>
+				<Reapply>true</Reapply>
+				<ReapplyLimit>false</ReapplyLimit>
+				<RetryCount>false</RetryCount>
+				<RetryWait>false</RetryWait>
+				<TemporalDistribution>false</TemporalDistribution>
+				<ContinueOnErrors>false</ContinueOnErrors>
+				<PostActionBehavior>
+					<Behavior>false</Behavior>
+					<AllowCancel>false</AllowCancel>
+					<Deadline>false</Deadline>
+					<Title>false</Title>
+					<Text>false</Text>
+				</PostActionBehavior>
+				<IsOffer>false</IsOffer>
+				<AnnounceOffer>false</AnnounceOffer>
+				<OfferCategory>false</OfferCategory>
+				<OfferDescriptionHTML>false</OfferDescriptionHTML>
+			</SettingsLocks>
+		</DefaultAction>
+	</Task>
+</BES>
