@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Analysis>
+		<Title>Check PendingFileRenameOperations</Title>
+		<Description><![CDATA[Created: Aug 18, 2016<BR>Created By: Martin Carnegie<BR>Comment: Identify systems that have entries in the PendingFileRenameOperations registry key. This is used to troubleshoot some issues with systems reporting reboot requirements even after being rebooted. ]]></Description>
+		<Relevance>exists value "PendingFileRenameOperations" of key "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager" of native registry</Relevance>
+		<Source>Internal</Source>
+		<SourceReleaseDate>2016-08-18</SourceReleaseDate>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Thu, 25 Jun 2020 14:55:07 +0000</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<Property Name="First 200 Characters of PendingFileRenameOperations" ID="1" EvaluationPeriod="PT1H"><![CDATA[if(length of (values whose (name of it as string as lowercase contains "pendingfilerename") of key "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager" of native registry as string) > 200) then (first 200 of (values whose (name of it as string as lowercase contains "pendingfilerename") of key "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager" of native registry as string)) else (values whose (name of it as string as lowercase contains "pendingfilerename") of key "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager" of native registry as string)]]></Property>
+		<Property Name="Number of Characters of PendingFileRenameOperations" ID="2" EvaluationPeriod="PT1H">length of (values whose (name of it as string as lowercase contains "pendingfilerename") of key "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager" of native registry as string)</Property>
+	</Analysis>
+</BES>
