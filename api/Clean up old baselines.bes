@@ -25,7 +25,7 @@
 		<SANSID></SANSID>
 		<MIMEField>
 			<Name>x-fixlet-modification-time</Name>
-			<Value>Fri, 17 Feb 2023 16:25:14 +0000</Value>
+			<Value>Fri, 03 Mar 2023 20:16:25 +0000</Value>
 		</MIMEField>
 		<Domain>BES </Domain>
 		<DefaultAction ID="Action1">
@@ -55,7 +55,7 @@ delete __appendfile
 
 //Get old action IDs
 
-wait {parameter "cURL" of action} -k -u {parameter "RemoteOP" of action}:{parameter "RemoteOPPass" of action} -X POST -d "relevance=(ids%20of%20bes%20fixlets%20whose%20%28%28name%20of%20site%20of%20it%20as%20lowercase%20%3D%20%22jared%27s%20custom%20content%22%29%20and%20%28baseline%20flag%20of%20it%20%3D%20true%29%20and%20%28%28current%20date%20-%20source%20release%20date%20of%20it%29%20%3E%20{parameter "nDays" of action}%2Aday%29%20and%20%28open%20action%20count%20of%20it%20%3D%200%29and%20%28applicable%20computer%20count%20of%20it%20%3D%200%29%29%20%20)" https://{parameter "BFServer" of action}/api/query -o "c:\export\oldbaselines.xml" 
+wait {parameter "cURL" of action} -k -u {parameter "RemoteOP" of action}:{parameter "RemoteOPPass" of action} -X POST -d "relevance=(ids%20of%20bes%20fixlets%20whose%20%28%28name%20of%20site%20of%20it%20as%20lowercase%20%3D%20custom%20content%22%29%20and%20%28baseline%20flag%20of%20it%20%3D%20true%29%20and%20%28%28current%20date%20-%20source%20release%20date%20of%20it%29%20%3E%20{parameter "nDays" of action}%2Aday%29%20and%20%28open%20action%20count%20of%20it%20%3D%200%29and%20%28applicable%20computer%20count%20of%20it%20%3D%200%29%29%20%20)" https://{parameter "BFServer" of action}/api/query -o "c:\export\oldbaselines.xml" 
 //Strip XML
 delete __appendfile
 appendfile {concatenation "%0d%0a" of (preceding texts of firsts "</Answer>" of (following texts of firsts "type=%22integer%22>" of (lines whose (it contains "<Answer type=%22integer%22>") of file "c:\export\oldbaselines.xml")))}
@@ -66,10 +66,10 @@ move __appendfile "c:\export\oldbaselines.txt"
 if {not exist folder "c:\export\baseline_archive"}
 	dos mkdir "c:\export\baseline_archive"
 endif
-wait cmd.exe /C for /f %i in (C:\export\oldbaselines.txt) do ( {parameter "cURL" of action} -k -u {parameter "RemoteOP" of action}:{parameter "RemoteOPPass" of action} -X GET https://{parameter "BFServer" of action}/api/baseline/custom/jared%27s%20custom%20content/%i -o c:\export\baseline_archive\%i.bes )
+wait cmd.exe /C for /f %i in (C:\export\oldbaselines.txt) do ( {parameter "cURL" of action} -k -u {parameter "RemoteOP" of action}:{parameter "RemoteOPPass" of action} -X GET https://{parameter "BFServer" of action}/api/baseline/custom/custom%20content/%i -o c:\export\baseline_archive\%i.bes )
 
 //Delete Actions
-wait cmd.exe /C for /f %i in (C:\export\oldbaselines.txt) do ( {parameter "cURL" of action} -k -u {parameter "RemoteOP" of action}:{parameter "RemoteOPPass" of action} -X DELETE https://{parameter "BFServer" of action}/api/baseline/custom/jared%27s%20custom%20content/%i )
+wait cmd.exe /C for /f %i in (C:\export\oldbaselines.txt) do ( {parameter "cURL" of action} -k -u {parameter "RemoteOP" of action}:{parameter "RemoteOPPass" of action} -X DELETE https://{parameter "BFServer" of action}/api/baseline/custom/custom%20content/%i )
 ]]></ActionScript>
 		</DefaultAction>
 	</Task>
