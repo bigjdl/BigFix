@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Task>
+		<Title>Clean AutoPKG Up -30 Days</Title>
+		<Description><![CDATA[<P><STRONG><FONT size=3>Action&nbsp;Parameters:</FONT></STRONG></P>
+<P>&nbsp;<INPUT onfocus="if (this.value == 'OP Name') {this.value = '';}" onblur="if (this.value == '') {this.value = 'OP Name';}" id=RemoteOP title="Enter the Operator Name with API Rights" value="OP Name" name=RemoteOP>&nbsp;<FONT color=#0080ff><STRONG>&lt;&lt;&nbsp;</STRONG></FONT> Enter the&nbsp;Bigfix Server Operator Name<BR>&nbsp;<INPUT id=RemoteOPPass title="Enter the Operator Password" type=password name=RemoteOPPass>&nbsp;&nbsp; <FONT color=#0080ff><STRONG>&lt;&lt;</STRONG></FONT>&nbsp; Enter the&nbsp;Bigfix Server Operator Password&nbsp;<BR><script>
+			document.body.ontakeaction = function() {
+				var theRemoteOP = document.getElementById( "RemoteOP" ).value;
+				var theRemoteOPPass = document.getElementById( "RemoteOPPass" ).value;
+				TakeSecureFixletAction( Relevance('id of current fixlet'), Relevance('id of current bes site'), "Action1", {}, { RemoteOP: theRemoteOP , RemoteOPPass: theRemoteOPPass } );
+				return false;
+			}
+			</script><BR><STRONG>_____________________________________________________________________________________________________</STRONG> </P>
+<P><SPAN lang=EN><STRONG><FONT size=3><U>Prerequisites:</U></FONT><BR>The endpoint that will be the target of this action should be available 24/7.&nbsp; It will also&nbsp;need&nbsp;Curl installed. NOTE: As of Windows 10 build 1803, Curl is already installed and located in the System32 directory.</STRONG></SPAN><SPAN lang=EN></P></SPAN>]]></Description>
+		<Relevance><![CDATA[version of client >= "9.0"]]></Relevance>
+		<Category>Bigfix Maintenance</Category>
+		<Source>jared.levy@hcl.com</Source>
+		<SourceID></SourceID>
+		<SourceReleaseDate>2022-02-20</SourceReleaseDate>
+		<SourceSeverity></SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Tue, 09 May 2023 01:10:23 +0000</Value>
+		</MIMEField>
+		<Domain>BES </Domain>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> to deploy this action.</PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[//Pathname to curl
+action parameter query "cURL" with description "Please enter the full path to curl binary" with default value "%22C:\Windows\System32\curl.exe%22"
+
+//IP or Hostname and PORT of Bigfix Server:
+action parameter query "BFServer" with description "Please enter the IP address or Hostname and Port of the Bigfix REST API (must be resolvable):" with default value "11.11.11.11:52311"
+
+
+//Check for C:\export
+if {not exist folder "c:\export"}
+	dos mkdir "c:\export"
+endif
+
+delete "c:\export\oldAutoPkgIDs.txt"
+delete "c:\export\oldAutoPkgIDs.xml"
+delete __appendfile
+
+
+//Get expired action IDs
+wait {parameter "cURL" of action} -k -u {parameter "RemoteOP" of action}:{parameter "RemoteOPPass" of action} -X POST -d "relevance=(%28id%20of%20it%2Csource%20release%20date%20of%20it%2C%20current%20date%20-%20source%20release%20date%20of%20it%29%20of%20bes%20fixlets%20whose%20%28%28name%20of%20site%20of%20it%20as%20lowercase%20contains%20%22autopkg%22%29%20and%20%28current%20date%20-%20source%20release%20date%20of%20it%20%3E%2030%2Aday%29%29)" https://{parameter "BFServer" of action}/api/query -o "c:\export\oldAutoPkgIDs.xml"
+
+//Strip XML
+delete __appendfile
+appendfile {concatenation "%0d%0a" of (preceding texts of firsts "</Answer>" of (following texts of firsts "type=%22integer%22>" of (lines whose (it contains "<Answer type=%22integer%22>") of file "c:\export\oldAutoPkgIDs.xml")))}
+move __appendfile "c:\export\oldAutoPkgIDs.txt"
+
+//Delete Actions
+wait cmd.exe /C for /f %i in (C:\export\oldAutoPkgIDs.txt) do ( {parameter "cURL" of action} -k -u {parameter "RemoteOP" of action}:{parameter "RemoteOPPass" of action} -X DELETE https://{parameter "BFServer" of action}/api/fixlet/custom/AutoPkg/%i )
+
+]]></ActionScript>
+			<Settings>
+				<PreActionShowUI>false</PreActionShowUI>
+				<HasRunningMessage>false</HasRunningMessage>
+				<HasTimeRange>false</HasTimeRange>
+				<HasStartTime>false</HasStartTime>
+				<HasEndTime>false</HasEndTime>
+				<HasDayOfWeekConstraint>false</HasDayOfWeekConstraint>
+				<UseUTCTime>false</UseUTCTime>
+				<ActiveUserRequirement>NoRequirement</ActiveUserRequirement>
+				<ActiveUserType>AllUsers</ActiveUserType>
+				<HasWhose>false</HasWhose>
+				<PreActionCacheDownload>false</PreActionCacheDownload>
+				<Reapply>true</Reapply>
+				<HasReapplyLimit>false</HasReapplyLimit>
+				<HasReapplyInterval>true</HasReapplyInterval>
+				<ReapplyInterval>P1D</ReapplyInterval>
+				<HasRetry>false</HasRetry>
+				<HasTemporalDistribution>false</HasTemporalDistribution>
+				<ContinueOnErrors>true</ContinueOnErrors>
+				<PostActionBehavior Behavior="Nothing"></PostActionBehavior>
+				<IsOffer>false</IsOffer>
+			</Settings>
+			<SettingsLocks>
+				<ActionUITitle>false</ActionUITitle>
+				<PreActionShowUI>false</PreActionShowUI>
+				<PreAction>
+					<Text>false</Text>
+					<AskToSaveWork>false</AskToSaveWork>
+					<ShowActionButton>false</ShowActionButton>
+					<ShowCancelButton>false</ShowCancelButton>
+					<DeadlineBehavior>false</DeadlineBehavior>
+					<ShowConfirmation>false</ShowConfirmation>
+				</PreAction>
+				<HasRunningMessage>false</HasRunningMessage>
+				<RunningMessage>
+					<Text>false</Text>
+				</RunningMessage>
+				<TimeRange>false</TimeRange>
+				<StartDateTimeOffset>false</StartDateTimeOffset>
+				<EndDateTimeOffset>false</EndDateTimeOffset>
+				<DayOfWeekConstraint>false</DayOfWeekConstraint>
+				<ActiveUserRequirement>false</ActiveUserRequirement>
+				<ActiveUserType>false</ActiveUserType>
+				<Whose>false</Whose>
+				<PreActionCacheDownload>false</PreActionCacheDownload>
+				<Reapply>false</Reapply>
+				<ReapplyLimit>false</ReapplyLimit>
+				<RetryCount>false</RetryCount>
+				<RetryWait>false</RetryWait>
+				<TemporalDistribution>false</TemporalDistribution>
+				<ContinueOnErrors>false</ContinueOnErrors>
+				<PostActionBehavior>
+					<Behavior>false</Behavior>
+					<AllowCancel>false</AllowCancel>
+					<Deadline>false</Deadline>
+					<Title>false</Title>
+					<Text>false</Text>
+				</PostActionBehavior>
+				<IsOffer>false</IsOffer>
+				<AnnounceOffer>false</AnnounceOffer>
+				<OfferCategory>false</OfferCategory>
+				<OfferDescriptionHTML>false</OfferDescriptionHTML>
+			</SettingsLocks>
+		</DefaultAction>
+	</Task>
+</BES>
