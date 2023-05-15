@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Task>
+		<Title>Clean up old baselines</Title>
+		<Description><![CDATA[<P><STRONG><FONT size=3>Action&nbsp;Parameters:</FONT></STRONG></P>
+<P>&nbsp;<INPUT onfocus="if (this.value == 'OP Name') {this.value = '';}" onblur="if (this.value == '') {this.value = 'OP Name';}" id=RemoteOP title="Enter the Operator Name with API Rights" value="OP Name" name=RemoteOP>&nbsp;<FONT color=#0080ff><STRONG>&lt;&lt;&nbsp;</STRONG></FONT> Enter the&nbsp;Bigfix Server Operator Name<BR>&nbsp;<INPUT id=RemoteOPPass title="Enter the Operator Password" type=password name=RemoteOPPass>&nbsp;&nbsp; <FONT color=#0080ff><STRONG>&lt;&lt;</STRONG></FONT>&nbsp; Enter the&nbsp;Bigfix Server Operator Password&nbsp;<BR><script>
+			document.body.ontakeaction = function() {
+				var theRemoteOP = document.getElementById( "RemoteOP" ).value;
+				var theRemoteOPPass = document.getElementById( "RemoteOPPass" ).value;
+				TakeSecureFixletAction( Relevance('id of current fixlet'), Relevance('id of current bes site'), "Action1", {}, { RemoteOP: theRemoteOP , RemoteOPPass: theRemoteOPPass } );
+				return false;
+			}
+			</script><BR><STRONG>_____________________________________________________________________________________________________</STRONG> </P>
+<P><FONT size=4><STRONG>BIGDELETE v2.1<BR><BR></STRONG></FONT><SPAN lang=EN>Bigdelete will delete STOPPED &amp; EXPIRED actions from the Bigfix console&nbsp;based on their age.</SPAN></P>
+<P><SPAN lang=EN>By default, archiving is turned on. All deleted actions will be stored at "c:\export\action_archive" or '/usr/local/share/BigFix/action_archive'<BR>To turn this feature off, comment out lines&nbsp;31 - 37 &amp; 58 - 61</SPAN></P>
+<P><SPAN lang=EN>By default, this action will run once every day.</SPAN></P>
+<P><SPAN lang=EN><STRONG><FONT size=3><U>Prerequisites:</U></FONT><BR>The endpoint that will be the target of this action should be available 24/7.&nbsp; It will also&nbsp;need&nbsp;Curl installed. NOTE: As of Windows 10 build 1803, Curl is already installed and located in the System32 directory.</STRONG></SPAN><SPAN lang=EN></P></SPAN>]]></Description>
+		<Relevance><![CDATA[version of client >= "9.0"]]></Relevance>
+		<Category>Bigfix Maintenance</Category>
+		<Source>jared.levy@hcl.com</Source>
+		<SourceID></SourceID>
+		<SourceReleaseDate>2023-02-03</SourceReleaseDate>
+		<SourceSeverity></SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Fri, 03 Mar 2023 20:16:25 +0000</Value>
+		</MIMEField>
+		<Domain>BES </Domain>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> to deploy this action.</PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[//Pathname to curl
+action parameter query "cURL" with description "Please enter the full path to curl binary" with default value "%22C:\Windows\System32\curl.exe%22"
+
+//Action Age :
+action parameter query "nDays" with description "Please enter the age in days of the action(s) to be deleted" with default value "120"
+
+//IP or Hostname and PORT of Bigfix Server:
+action parameter query "BFServer" with description "Please enter the IP address or Hostname and Port of the Bigfix REST API (must be resolvable):" with default value "11.11.11.11:52311"
+
+
+//Check for C:\export
+if {not exist folder "c:\export"}
+	dos mkdir "c:\export"
+endif
+
+delete "c:\export\oldbaselines.txt"
+delete "c:\export\oldbaselines.xml"
+delete __appendfile
+
+//Get old action IDs
+
+wait {parameter "cURL" of action} -k -u {parameter "RemoteOP" of action}:{parameter "RemoteOPPass" of action} -X POST -d "relevance=(ids%20of%20bes%20fixlets%20whose%20%28%28name%20of%20site%20of%20it%20as%20lowercase%20%3D%20custom%20content%22%29%20and%20%28baseline%20flag%20of%20it%20%3D%20true%29%20and%20%28%28current%20date%20-%20source%20release%20date%20of%20it%29%20%3E%20{parameter "nDays" of action}%2Aday%29%20and%20%28open%20action%20count%20of%20it%20%3D%200%29and%20%28applicable%20computer%20count%20of%20it%20%3D%200%29%29%20%20)" https://{parameter "BFServer" of action}/api/query -o "c:\export\oldbaselines.xml" 
+//Strip XML
+delete __appendfile
+appendfile {concatenation "%0d%0a" of (preceding texts of firsts "</Answer>" of (following texts of firsts "type=%22integer%22>" of (lines whose (it contains "<Answer type=%22integer%22>") of file "c:\export\oldbaselines.xml")))}
+move __appendfile "c:\export\oldbaselines.txt"
+
+
+//Archive Actions
+if {not exist folder "c:\export\baseline_archive"}
+	dos mkdir "c:\export\baseline_archive"
+endif
+wait cmd.exe /C for /f %i in (C:\export\oldbaselines.txt) do ( {parameter "cURL" of action} -k -u {parameter "RemoteOP" of action}:{parameter "RemoteOPPass" of action} -X GET https://{parameter "BFServer" of action}/api/baseline/custom/custom%20content/%i -o c:\export\baseline_archive\%i.bes )
+
+//Delete Actions
+wait cmd.exe /C for /f %i in (C:\export\oldbaselines.txt) do ( {parameter "cURL" of action} -k -u {parameter "RemoteOP" of action}:{parameter "RemoteOPPass" of action} -X DELETE https://{parameter "BFServer" of action}/api/baseline/custom/custom%20content/%i )
+]]></ActionScript>
+		</DefaultAction>
+	</Task>
+</BES>

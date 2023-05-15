@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Fixlet>
+		<Title>Restart Needed -  Custom Immediate</Title>
+		<Description><![CDATA[<DIV class=FixletMessage>
+<TABLE>
+<TBODY>
+<TR>
+<TD>
+<P>The listed computers have pending operations that are waiting for a restart. This Fixlet message will become relevant when the computer is in a 'pending restart' state, regardless if the 'pending restart' state was triggered by a BES action. </P>
+<P><STRONG>Note:</STRONG> For pre-6.0 versions of BES, the BES Clients will not restart unless you set the appropriate post-action restart options through the "Take Action Dialog". For BES 6.0+, the standard restart behavior will be set in the "Take Action Dialog", but you can customize other options to match the intended restart behavior.</P>
+<P>To determine whether or not a computer is in the pending restart state due to a BES action, please see the following Fixlet messages:
+<UL>
+<LI><SPAN id=relTag2Script8></SPAN><script>var isEvansOrLater = '<?relevance if (exists property "datastore inspectors") then (True) else (False)?>' == 'True'?true:false; try{if (isEvansOrLater) {document.getElementById("relTag2Script8").innerHTML=Relevance('if (exists (fixlet 390 of bes site whose (name of it equals "BES Support"))) then ( ((format "<?rxlat {0} ({1} relevant computers)?>" + link of it as string + applicable computer count of it as string ) as string) of (fixlet 390 of bes site whose (name of it equals "BES Support")) ) else ("<?rxlat Fixlet unavailable?>")');} else {document.getElementById("relTag2Script8").innerHTML=EvaluateRelevance('if (exists (fixlet 390 of bes site whose (name of it equals "BES Support"))) then (link of it as string & " (" & applicable computer count of it as string & " relevant computers)") of (fixlet 390 of bes site whose (name of it equals "BES Support")) else "Fixlet unavailable"');}}catch(e){}</script>
+<LI><SPAN id=relTag2Script12></SPAN><script>var isEvansOrLater = '<?relevance if (exists property "datastore inspectors") then (True) else (False)?>' == 'True'?true:false; try{if (isEvansOrLater) {document.getElementById("relTag2Script12").innerHTML=Relevance('if (exists (fixlet 391 of bes site whose (name of it equals "BES Support"))) then ( ((format "<?rxlat {0} ({1} relevant computers)?>" + link of it as string + applicable computer count of it as string ) as string) of (fixlet 391 of bes site whose (name of it equals "BES Support")) ) else ("<?rxlat Fixlet unavailable?>")');} else {document.getElementById("relTag2Script12").innerHTML=EvaluateRelevance('if (exists (fixlet 391 of bes site whose (name of it equals "BES Support"))) then (link of it as string & " (" & applicable computer count of it as string & " relevant computers)") of (fixlet 391 of bes site whose (name of it equals "BES Support")) else "Fixlet unavailable"');}}catch(e){}</script></LI></UL>
+<P></P>
+<P><B>Note:</B> When running the action below, you should pay careful attention to the action deployment options in order to avoid restarting the computer at inappropriate times.</P>
+<P><STRONG>Note:</STRONG> Click <A href="https://support.hcltechsw.com/csm?id=kb_article&amp;sysparm_article=KB0022463">here</A> for more information on how the 'pending restart' status is determined.</P></TD></TR></TBODY></TABLE></DIV>]]></Description>
+		<Relevance>pending restart</Relevance>
+		<Category>Computer Support</Category>
+		<DownloadSize>0</DownloadSize>
+		<Source>BigFix</Source>
+		<SourceID><![CDATA[<Unspecified>]]></SourceID>
+		<SourceSeverity>Moderate</SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>x-fixlet-first-propagation</Name>
+			<Value>Wed, 03 Mar 2004 23:08:10 +0000</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-domain_attributes</Name>
+			<Value>BES Computer</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Tue, 02 May 2023 19:17:16 +0000</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<Action ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> to target the computers to be restarted. Please use the post-action tab in the Take Action Dialog to setup the restart behavior.</PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell">// only run this action on computers that are not locked
+continue if {not locked of action lock state}
+
+// restart action command removed on March 8th, 2007, please set the appropriate post-action restart options through the Take Action Dialog.
+action requires restart</ActionScript>
+			<Settings>
+				<PreActionShowUI>false</PreActionShowUI>
+				<HasRunningMessage>false</HasRunningMessage>
+				<HasTimeRange>false</HasTimeRange>
+				<HasStartTime>false</HasStartTime>
+				<HasEndTime>true</HasEndTime>
+				<EndDateTimeLocalOffset>P2D</EndDateTimeLocalOffset>
+				<HasDayOfWeekConstraint>false</HasDayOfWeekConstraint>
+				<UseUTCTime>false</UseUTCTime>
+				<ActiveUserRequirement>NoRequirement</ActiveUserRequirement>
+				<ActiveUserType>AllUsers</ActiveUserType>
+				<HasWhose>false</HasWhose>
+				<PreActionCacheDownload>false</PreActionCacheDownload>
+				<Reapply>false</Reapply>
+				<HasReapplyLimit>true</HasReapplyLimit>
+				<ReapplyLimit>3</ReapplyLimit>
+				<HasReapplyInterval>false</HasReapplyInterval>
+				<HasRetry>false</HasRetry>
+				<HasTemporalDistribution>false</HasTemporalDistribution>
+				<ContinueOnErrors>true</ContinueOnErrors>
+				<PostActionBehavior Behavior="Restart">
+					<AllowCancel>false</AllowCancel>
+					<PostActionDeadlineBehavior>RunAutomatically</PostActionDeadlineBehavior>
+					<PostActionDeadlineInterval>PT1M</PostActionDeadlineInterval>
+				</PostActionBehavior>
+				<IsOffer>false</IsOffer>
+			</Settings>
+			<SettingsLocks>
+				<ActionUITitle>false</ActionUITitle>
+				<PreActionShowUI>false</PreActionShowUI>
+				<PreAction>
+					<Text>false</Text>
+					<AskToSaveWork>false</AskToSaveWork>
+					<ShowActionButton>false</ShowActionButton>
+					<ShowCancelButton>false</ShowCancelButton>
+					<DeadlineBehavior>false</DeadlineBehavior>
+					<ShowConfirmation>false</ShowConfirmation>
+				</PreAction>
+				<HasRunningMessage>false</HasRunningMessage>
+				<RunningMessage>
+					<Text>false</Text>
+				</RunningMessage>
+				<TimeRange>false</TimeRange>
+				<StartDateTimeOffset>false</StartDateTimeOffset>
+				<EndDateTimeOffset>false</EndDateTimeOffset>
+				<DayOfWeekConstraint>false</DayOfWeekConstraint>
+				<ActiveUserRequirement>false</ActiveUserRequirement>
+				<ActiveUserType>false</ActiveUserType>
+				<Whose>false</Whose>
+				<PreActionCacheDownload>false</PreActionCacheDownload>
+				<Reapply>false</Reapply>
+				<ReapplyLimit>false</ReapplyLimit>
+				<RetryCount>false</RetryCount>
+				<RetryWait>false</RetryWait>
+				<TemporalDistribution>false</TemporalDistribution>
+				<ContinueOnErrors>false</ContinueOnErrors>
+				<PostActionBehavior>
+					<Behavior>true</Behavior>
+					<AllowCancel>false</AllowCancel>
+					<Deadline>true</Deadline>
+					<Title>false</Title>
+					<Text>false</Text>
+				</PostActionBehavior>
+				<IsOffer>false</IsOffer>
+				<AnnounceOffer>false</AnnounceOffer>
+				<OfferCategory>false</OfferCategory>
+				<OfferDescriptionHTML>false</OfferDescriptionHTML>
+			</SettingsLocks>
+		</Action>
+	</Fixlet>
+</BES>

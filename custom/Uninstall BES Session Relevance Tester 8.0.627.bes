@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Task>
+		<Title>Uninstall BES Session Relevance Tester 8.0.627</Title>
+		<Description><![CDATA[This task uninstalls the BES Session Relevance Tester 8.0.627 package from the selected endpoints.<BR><BR><B>Important Note:</B>&nbsp;Uninstallation of packages may have unintentional side effects, especially when associated applications are running. Please take extra caution to qualify this action in a test environment prior to use in a production environment.<BR><BR><B>Uninstallation Command: </B>msiexec.exe /x "{D01AA663-F3AA-4015-A485-1B98551EC852}" /qn<BR><BR><B>Run Command As: </B>System User ]]></Description>
+		<Relevance><![CDATA[version of client >= "8.2"]]></Relevance>
+		<Relevance>windows of operating system AND (if( name of operating system starts with "Win" ) then platform id of operating system != 3 else true)</Relevance>
+		<Relevance>exists file "msiexec.exe" of system folder</Relevance>
+		<Relevance><![CDATA[/* Relevance generated from file "BES Session Relevance Installer.msi" */
+(disjunction of (exists keys "{D01AA663-F3AA-4015-A485-1B98551EC852}" whose ( value "DisplayVersion" of it as string as version >= "8.0.627" as version) of keys "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" of ( x32 registry; (if exists x64 registry then x64 registry else nothing) )))]]></Relevance>
+		<Category>Software Distribution</Category>
+		<Source>BES Session Relevance Tester 8.0.627</Source>
+		<SourceID>Unspecified</SourceID>
+		<SourceReleaseDate>2023-02-22</SourceReleaseDate>
+		<SourceSeverity>Unspecified</SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>x-fixlet-taskType</Name>
+			<Value>uninstall</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-swdUseCommandLine</Name>
+			<Value>false</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-swdPackageID</Name>
+			<Value>SWD_Package_Webui_jlevy@bigshouse.com_1677090102350106</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-swdSelectedFiles</Name>
+			<Value>[]</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-deployLinkId</Name>
+			<Value>SWD_Package_Webui_jlevy@bigshouse.com_1677090102350106-1677090232768</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-swdCommandOverride</Name>
+			<Value>"msiexec.exe /x \"{D01AA663-F3AA-4015-A485-1B98551EC852}\" /qn"</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-swd-wizard-data</Name>
+			<Value>{"description":null,"version":"8.0.627","owner":"jlevy@bigshouse.com","creator":"jlevy@bigshouse.com","product":"BES Session Relevance Tester 8.0.627","files":[{"id":"fa0704db53ff519abf2e677f6ba8f001b3458b02_1677090142984517","size":2206720,"dateadded":"Wed, Feb 22 2023 13:22:22 -0500","compressed_data_for_package":false,"folderoffset":"","sha256":"c42b153e2ec96b99a540318cf3c3eab02003608acb4e0e91e4e26615d9c4535b","filename":"BES Session Relevance Installer.msi","sha1":"FA0704DB53FF519ABF2E677F6BA8F001B3458B02","msi_metadata":{"msi_metadata_version":"1.0.0.9","ProductName":"BES Session Relevance Tester 8.0.627","ProductCode":"{D01AA663-F3AA-4015-A485-1B98551EC852}","ProductVersion":"8.0.627","ProductLanguage":"1033","UpgradeCode":"{4F8AAA1F-FCA5-4398-9266-32EEFB905F48}","Manufacturer":"BigFix (an IBM Company)","LaunchConditions":[]},"ReferenceID":"2206","ReferenceName":"/fa0704db53ff519abf2e677f6ba8f001b3458b02/BES%20Session%20Relevance%20Installer.msi","file_url":""}],"pkgvariablekey":"SWD_Package_Webui_jlevy@bigshouse.com_1677090102350106","os":["windows"],"lastmodified":"Wed Feb 22 2023 13:23:53 GMT-0500","vendor":"BigFix","categories":[],"pkgTag":"","private":0,"comment":null,"ssaType":true,"configurations":[{"name":"Configuration 1","id":"16770901233805","showSiteDropdown":true,"selectedSite":{"selected":{"Name":"Custom Content","ID":8589934695,"Type":2}},"site":{"Name":"Custom Content","ID":8589934695,"Type":2}}]}</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-runAsSystem</Name>
+			<Value>{"userType":"system","passwordType":"required","username":"","asAdmin":"true","targetuser":"","completion":"job"}</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-swdDeployCategory</Name>
+			<Value>Uninstall</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-pkgTag</Name>
+			<Value></Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>action-ui-metadata</Name>
+			<Value>{"version":"8.0.627","size":2206720,"softwarePackageName":"BES Session Relevance Tester 8.0.627","actionType":"uninstall","configurationName":"Configuration 1","correlationTag":"SWD_Package_Webui_jlevy@bigshouse.com_1677090102350106-16770901233805"}</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-prerequisites</Name>
+			<Value>[]</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-configurationID</Name>
+			<Value>16770901233805</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-configurations</Name>
+			<Value>[{"name":"Configuration 1","id":"16770901233805","showSiteDropdown":true,"selectedSite":{"selected":{"Name":"Custom Content","ID":8589934695,"Type":2}},"site":{"Name":"Custom Content","ID":8589934695,"Type":2}}]</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-correlation</Name>
+			<Value>SWD_Package_Webui_jlevy@bigshouse.com_1677090102350106-16770901233805</Value>
+		</MIMEField>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Tue, 02 May 2023 19:17:16 +0000</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<Action ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> to deploy this action</PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[// Log setup
+parameter "mainSWDLogFolder" = "{parent folder of client folder of current site}/__Global/SWDDeployData"
+folder create "{parameter "mainSWDLogFolder"}"
+parameter "logFile" = "SWD_DeploymentResults.log"
+
+delete __createfile
+parameter "logFolder" = "{parameter "mainSWDLogFolder"}"
+// Run setup process
+delete run.bat
+
+// Use .bat to set working directory to packages root, for setup command.
+createfile until _end_
+@ECHO OFF
+echo %DATE% %TIME% >> "{parameter "logFolder"}\{parameter "logFile"}"
+echo Action ID: {id of active action} >> "{parameter "logFolder"}\{parameter "logFile"}"
+set errorlevel=
+
+echo Command: msiexec.exe /x "{{D01AA663-F3AA-4015-A485-1B98551EC852}" /qn >> "{parameter "logFolder"}/{parameter "logFile"}"
+msiexec.exe /x "{{D01AA663-F3AA-4015-A485-1B98551EC852}" /qn >> "{parameter "logFolder"}/{parameter "logFile"}" 2>&1
+
+set SWDExitCode=%errorlevel%
+echo Return code: %SWDExitCode% >> "{parameter "logFolder"}\{parameter "logFile"}"
+echo. >> "{parameter "logFolder"}\{parameter "logFile"}"
+exit %SWDExitCode%
+_end_
+
+move __createfile run.bat
+override wait
+hidden=true
+completion=job
+wait run.bat
+]]></ActionScript>
+			<SuccessCriteria Option="CustomRelevance"><![CDATA[/* Relevance generated from file "BES Session Relevance Installer.msi" */
+(disjunction of (exists keys "{D01AA663-F3AA-4015-A485-1B98551EC852}" whose ( value "DisplayVersion" of it as string as version >= "8.0.627" as version) of keys "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" of ( x32 registry; (if exists x64 registry then x64 registry else nothing) )))]]></SuccessCriteria>
+		</Action>
+	</Task>
+</BES>

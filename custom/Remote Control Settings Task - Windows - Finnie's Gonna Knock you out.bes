@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Task>
+		<Title>Remote Control Settings Task - Windows - Finnie's Gonna Knock you out</Title>
+		<Description><![CDATA[<P>This task will configure BigFix Remote Control Target settings.</P>]]></Description>
+		<Relevance>(if( name of operating system starts with "Win" ) then platform id of operating system != 3 else false) and (exists service "TRCTARGET")</Relevance>
+		<Category></Category>
+		<Source>BigFix Remote Control Target Wizard</Source>
+		<SourceID>BigFixRemoteControlTargetWizard</SourceID>
+		<SourceReleaseDate>2023-04-24</SourceReleaseDate>
+		<SourceSeverity></SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Tue, 02 May 2023 19:17:16 +0000</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<Action ID="RCSettings">
+			<Description>
+				<PreLink><![CDATA[Click&nbsp;]]></PreLink>
+				<Link>here</Link>
+				<PostLink><![CDATA[&nbsp;to deploy this action]]></PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[
+
+delete __createfile 
+delete __trcconfig.reg 
+createfile until __ENDCREATE
+REGEDIT4
+{if (value "DisplayVersion" of key whose ( value "DisplayName" of it as string contains "Remote Control - Target" ) of key "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" of x32 registry as string as version < "10.0.0.0001") then "[HKEY_LOCAL_MACHINE\SOFTWARE\IBM\Tivoli\Remote Control\Target]" else  "[HKEY_LOCAL_MACHINE\SOFTWARE\BigFix\Remote Control\Target]"}
+
+"AcceptanceGraceTime"="45"
+"AcceptanceProceed"="no"
+"Accessibility"="no"
+"AllowActive"="yes"
+"AllowCollaboration"="yes"
+"AllowForceDisconnect"="no"
+"AllowGuidance"="yes"
+"AllowHandover"="yes"
+"AllowInputLock"="yes"
+"AllowMonitor"="yes"
+"AllowP2P"="yes"
+"AllowP2PFailover"="yes"
+"AllowPrivacy"="yes"
+"AllowRecording"="yes"
+"AuditToSystem"="yes"
+"AutoSaveChat"="no"
+"AutoWinLogon"="yes"
+"CheckUserGroup"="BUILTIN\\Administrators"
+"CheckUserLogin"="yes"
+"ConfirmCollaboration"="yes"
+"ConfirmFileTransfer"="yes"
+"ConfirmModeChange"="yes"
+"ConfirmRecording"="yes"
+"ConfirmSysInfo"="yes"
+"ConfirmTakeOver"="yes"
+"DisableChat"="no"
+"DisableClipboard"="no"
+"DisableFilePull"="no"
+"DisableFilePush"="no"
+"DisableGUI"="no"
+"DisableGUI_CLI"="no"
+"DisableIPv4"="no"
+"DisableIPv6"="no"
+"DisablePanicKey"="no"
+"EnableFileTransferSystemAccess"="no"
+"EnableInputLock"="no"
+"EnableOSSN"="no"
+"EnablePrivacy"="no"
+"EnableTrueColor"="no"
+"FIPSCompliance"="no"
+"FollowActiveSession"="no"
+"ForceDisconnectTimeout"="45"
+"GroupLabel"="DefaultTargetGroup"
+"HideWindows"="no"
+"IdleTimeout"="360"
+"LockColorDepth"="no"
+"LogLevel"="4"
+"LogRollover"="Daily"
+"LogRotation"="Weekly"
+"Managed"="yes"
+"NoScreenSaver"="no"
+"PortToListen"="888"
+"ProceedOnScriptFail"="no"
+"RemoveBackground"="no"
+"RunPostScript"="no"
+"RunPreScript"="no"
+"SP800131ACompliance"="no"
+"ServerURL"="https://remotecontrol.bigshouse.com/trc"
+"SessionDisconnect"="Disabled"
+
+__ENDCREATE
+copy __createfile __trcconfig.reg
+
+
+
+waithidden regedit /s __trcconfig.reg 
+waithidden net stop TRCTARGET /y 
+waithidden net start TRCTARGET /y 
+delete __createfile 
+delete __trcconfig.reg]]></ActionScript>
+		</Action>
+	</Task>
+</BES>
