@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Task>
+		<Title>Get External IP</Title>
+		<Description></Description>
+		<Relevance>true</Relevance>
+		<Category></Category>
+		<Source>Internal</Source>
+		<SourceID></SourceID>
+		<SourceReleaseDate>2023-05-19</SourceReleaseDate>
+		<SourceSeverity></SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Fri, 19 May 2023 17:30:03 +0000</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> to deploy this action.</PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell">// Enter your action script here
+
+if {windows of operating system}
+	if {not exists folder "c:\tmp"}
+		folder create "c:\tmp"
+	endif
+	delete "c:\tmp\ip.txt"
+	download now as ip.txt http://api.ipify.org
+	move __Download\ip.txt "c:\tmp\ip.txt"
+else
+	delete "/tmp/ip.txt"
+	download now as ip.txt http://api.ipify.org
+	move __Download\ip.txt "/tmp/ip.txt"
+endif
+	</ActionScript>
+		</DefaultAction>
+	</Task>
+</BES>
