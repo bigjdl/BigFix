@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
 	<Task>
-		<Title>Dynamic Install Chrome- Mac (JGStew - Fixed My Stuff)</Title>
+		<Title>Dynamic Install Chrome- Mac</Title>
 		<Description>Install Chrome based upon the latest prefetch info for the same found in existing patch content. </Description>
 		<Relevance>mac of operating system</Relevance>
 		<Relevance>not exists application "Google Chrome.app"</Relevance>
