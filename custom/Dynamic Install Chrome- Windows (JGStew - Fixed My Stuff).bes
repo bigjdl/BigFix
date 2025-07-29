@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BES xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="BES.xsd">
+	<Task>
+		<Title>Dynamic Install Chrome- Windows (JGStew - Fixed My Stuff)</Title>
+		<Description>Install Chrome based upon the latest prefetch info for the same found in existing patch content. </Description>
+		<Relevance>windows of operating system</Relevance>
+		<Relevance>not exists keys whose(value "DisplayName" of it as string starts with "Chrome") of keys "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall" of (x32 registries; x64 registries)</Relevance>
+		<Relevance>exists files "Updates.fxf" of folders "Updates for Windows Applications" of data folders of client</Relevance>
+		<Relevance>not (exists regapp "chrome.exe")</Relevance>
+		<Category></Category>
+		<Source>Internal</Source>
+		<SourceID></SourceID>
+		<SourceReleaseDate>2025-07-28</SourceReleaseDate>
+		<SourceSeverity></SourceSeverity>
+		<CVENames></CVENames>
+		<SANSID></SANSID>
+		<MIMEField>
+			<Name>x-fixlet-modification-time</Name>
+			<Value>Tue, 29 Jul 2025 16:39:55 +0000</Value>
+		</MIMEField>
+		<Domain>BESC</Domain>
+		<DefaultAction ID="Action1">
+			<Description>
+				<PreLink>Click </PreLink>
+				<Link>here</Link>
+				<PostLink> to deploy this action.</PostLink>
+			</Description>
+			<ActionScript MIMEType="application/x-Fixlet-Windows-Shell"><![CDATA[// Download:
+// must use prefetch block. parses prefetch block info from regular prefetch statement.
+// this could be made better by parsing the prefetch info using regex instead of preceding/following.
+begin prefetch block
+add prefetch item name=chrome.msi { ((("sha1=" & it) of unique value of preceding texts of firsts " " of following texts of firsts "sha1:" of it) & ((" size=" & it) of unique value of preceding texts of firsts " " of following texts of firsts "size:" of it) & ( (" url=" & it) of unique value of ("http" & it) of preceding texts of firsts " " of following texts of firsts " http" of it) & ((" sha256=" & it) of unique value of following texts of firsts "sha256:" of it) ) of tuple string items 0 of concatenations ", " of unique values whose(it contains "64.msi") of following texts of firsts "prefetch googlechromestandaloneenterprise64.msi" of lines whose(it contains "dl.google.com") of files "Updates.fxf" of folders "Updates for Windows Applications" of data folders of client}
+end prefetch block
+// Install
+wait msiexec.exe /i "__Download\chrome.msi" /qn /norestart
+
+// End]]></ActionScript>
+		</DefaultAction>
+	</Task>
+</BES>
