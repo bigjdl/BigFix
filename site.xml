@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ site.xml can define relevance clauses that are applied
+ to all fixlet contents (fixlets/tasks/analyses/computergroups) in the site
+ This aids efficiency because, if false, none of the individual fixlets will be evaluated
+-->
+<Site>
+  <Relevance>
+    <![CDATA[
+      (if exists property "in proxy agent context" then not in proxy agent context else True)
+    ]]>
+  </Relevance>
+</Site>

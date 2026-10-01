@@ -1,0 +1,3 @@
+Files in this directory are available to clients under their
+`__BESData/sitename` directory.  This is commonly used for download manifest files
+or prefetch-plugin scripts that may need to execute on the client as action dependencies.

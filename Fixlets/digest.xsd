@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Type definition for allowed evaluation periods -->
+  <xs:simpleType name="EvaluationPeriodType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PT0S" />
+      <xs:enumeration value="PT1M" />
+      <xs:enumeration value="PT5M" />
+      <xs:enumeration value="PT15M" />
+      <xs:enumeration value="PT30M" />
+      <xs:enumeration value="PT1H" />
+      <xs:enumeration value="PT2H" />
+      <xs:enumeration value="PT4H" />
+      <xs:enumeration value="PT6H" />
+      <xs:enumeration value="PT8H" />
+      <xs:enumeration value="PT12H" />
+      <xs:enumeration value="P1D" />
+      <xs:enumeration value="P2D" />
+      <xs:enumeration value="P3D" />
+      <xs:enumeration value="P5D" />
+      <xs:enumeration value="P7D" />
+      <xs:enumeration value="P15D" />
+      <xs:enumeration value="P28D" />
+      <xs:enumeration value="P30D" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="Digest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Relevance"
+                    type="xs:string"
+                    minOccurs="0"
+                    maxOccurs="1" />
+        <xs:element name="DigestRelevanceEvaluationPeriod"
+                    type="EvaluationPeriodType"
+                    minOccurs="0"
+                    maxOccurs="1" />
+        <xs:element name="ChildEvaluationPeriod"
+                    type="EvaluationPeriodType"
+                    minOccurs="0"
+                    maxOccurs="1" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+ </xs:schema>

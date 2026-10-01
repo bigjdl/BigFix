@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Digest>
+  <Relevance>
+    <![CDATA[ product type of operating system = nt server product type or product type of operating system = nt domain controller product type ]]>
+  </Relevance>
+  <DigestRelevanceEvaluationPeriod>PT15M</DigestRelevanceEvaluationPeriod>
+  <ChildEvaluationPeriod>PT5M</ChildEvaluationPeriod>
+</Digest>
